@@ -23,5 +23,4 @@ func GetUser(userId int64) (*User, *utils.ApplicationError) {
 		StatusCode: http.StatusNotFound,
 		Code:       "not_found",
 	}
-
 }
