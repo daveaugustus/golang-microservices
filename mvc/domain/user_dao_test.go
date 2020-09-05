@@ -11,6 +11,7 @@ func TestGetUserNoUserFound(t *testing.T) {
 	// Initialization
 
 	// Execution
+
 	user, err := UserDao.GetUser(0)
 
 	// Validation
@@ -22,7 +23,9 @@ func TestGetUserNoUserFound(t *testing.T) {
 }
 
 func TestGetUserNoError(t *testing.T) {
+
 	user, err := UserDao.GetUser(123)
+
 	assert.Nil(t, err)
 	assert.NotNil(t, user)
 	assert.EqualValues(t, 1, user.ID)
