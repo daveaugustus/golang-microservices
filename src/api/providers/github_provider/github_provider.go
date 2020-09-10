@@ -26,6 +26,8 @@ func CreateRepo(accessToken string, request github.CreateRepoRequest) (*github.C
 	headers.Set(headerAuthorization, getAuthorizationHeader(accessToken))
 
 	response, err := restclient.Post(urlCreateRepo, request, headers)
+	fmt.Println(response)
+	fmt.Println(err)
 	if err != nil {
 		// TODO: handle error for loose connectivity
 		log.Println(fmt.Sprintf("error trying to create new repo in github %s", err.Error()))
