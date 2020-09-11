@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+
 var (
 	enabledMocks = false
 	mocks        = make(map[string]*response)
@@ -34,11 +35,11 @@ func Post(url string, body interface{}, headers http.Header) (*http.Response, er
 	if err != nil {
 		//TODO: handle error
 		return nil, err
+
 	}
 	request.Header = headers
 
 	client := http.Client{}
 	response, err := client.Do(request)
 	return response, err
-
 }

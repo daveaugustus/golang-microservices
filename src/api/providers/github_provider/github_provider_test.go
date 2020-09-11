@@ -5,6 +5,7 @@ import (
 
 	"github.com/davetweetlive/golang-microservices/src/api/clients/restclient"
 	"github.com/davetweetlive/golang-microservices/src/api/domain/github"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -13,6 +14,7 @@ func TestGetAuthorizationHeader(t *testing.T) {
 	assert.EqualValues(t, header, "token abc123")
 }
 
+
 func TestCreateRepoErrorRestClient(t *testing.T) {
 	restclient.StartMockups()
 	restclient.StopMockups()
@@ -20,3 +22,4 @@ func TestCreateRepoErrorRestClient(t *testing.T) {
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
 }
+
