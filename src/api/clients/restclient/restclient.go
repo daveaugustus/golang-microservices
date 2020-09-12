@@ -3,27 +3,51 @@ package restclient
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 )
 
-
 var (
 	enabledMocks = false
-	mocks        = make(map[string]*response)
+	mocks        = make(map[string]*Mock)
 )
 
-type response struct{}
+type Mock struct {
+	Url        string
+	HttpMethod string
+	Response   *http.Response
+	Err        error
+}
+
+func GetMockId(httpMethod, url string) string {
+	return fmt.Sprintf("%s %s", httpMethod, url)
+}
 
 func StartMockups() {
 	enabledMocks = true
 }
+
+func FlushMockups() {
+	mocks = make(map[string]*Mock)
+}
+
 func StopMockups() {
 	enabledMocks = false
+}
+
+func AddMockUp(mock Mock) {
+	mocks[GetMockId(mock.HttpMethod, mock.Url)] = &mock
 }
 
 func Post(url string, body interface{}, headers http.Header) (*http.Response, error) {
 	if enabledMocks {
 		// TODO: Retrun local mock without calling any external resource
+		mock := mocks[GetMockId(http.MethodPost, url)]
+		if mock == nil {
+			return nil, errors.New("No mockup found for the given request")
+		}
+		return mock.Response, mock.Err
 	}
 
 	jsonBytes, err := json.Marshal(body)
